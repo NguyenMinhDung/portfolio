@@ -19,8 +19,8 @@ const nextConfig = {
   output: 'export',  // Add static export for GitHub Pages deployment
   
   // Set basePath and assetPrefix for GitHub Pages
-  // basePath: isGithubPages ? `/${REPOSITORY_NAME}` : '',
-  // assetPrefix: isGithubPages ? `/${REPOSITORY_NAME}/` : '',
+  basePath: '/portfolio',
+  assetPrefix: '/portfolio/',
   
   images: {
     domains: ['localhost', 'images.ctfassets.net'],

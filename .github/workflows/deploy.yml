@@ -61,14 +61,14 @@ jobs:
       - name: Create .nojekyll file
         run: touch ./out/.nojekyll
       
-      - name: Fix paths for GitHub Pages
-        run: |
-          # Get the repository name
-          REPO_NAME="${{ steps.repo-name.outputs.REPOSITORY_NAME }}"
+      # - name: Fix paths for GitHub Pages
+      #   run: |
+      #     # Get the repository name
+      #     REPO_NAME="${{ steps.repo-name.outputs.REPOSITORY_NAME }}"
           
-          # Adjust paths in HTML files
-          find ./out -name "*.html" -exec sed -i "s|href=\"/|href=\"/${REPO_NAME}/|g" {} \;
-          find ./out -name "*.html" -exec sed -i "s|src=\"/|src=\"/${REPO_NAME}/|g" {} \;
+      #     # Adjust paths in HTML files
+      #     find ./out -name "*.html" -exec sed -i "s|href=\"/|href=\"/${REPO_NAME}/|g" {} \;
+      #     find ./out -name "*.html" -exec sed -i "s|src=\"/|src=\"/${REPO_NAME}/|g" {} \;
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
