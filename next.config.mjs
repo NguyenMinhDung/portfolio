@@ -10,8 +10,10 @@ if (!process.env.NEXT_PUBLIC_AIRTABLE_API_KEY || !process.env.CONTENTFUL_SPACE_I
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  output: 'export',  // Add static export for GitHub Pages deployment
   images: {
     domains: ['localhost', 'images.ctfassets.net'],
+    unoptimized: true, // Required when using export
   },
   // Thêm các biến môi trường mà cả client và server cần truy cập
   env: {
