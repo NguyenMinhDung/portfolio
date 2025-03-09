@@ -8,10 +8,11 @@ if (!process.env.NEXT_PUBLIC_AIRTABLE_API_KEY || !process.env.CONTENTFUL_SPACE_I
 }
 
 // Get the repository name from the package.json or fallback to 'portfolio'
-const REPOSITORY_NAME = process.env.REPOSITORY_NAME || 'portfolio';
+const REPOSITORY_NAME = process.env.REPOSITORY_NAME || '';
 
 // Determine if we're in production build (GitHub Pages deployment)
 const isGithubPages = process.env.IS_GITHUB_PAGES === 'true';
+
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

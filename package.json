@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node -r ./src/env-config.js node_modules/.bin/next dev --turbopack",
-    "build": "node -r ./src/env-config.js node_modules/.bin/next build",
+    "dev": "next dev --turbopack",
+    "build": "next build",
     "start": "npx serve@latest out",
     "lint": "next lint"
   },

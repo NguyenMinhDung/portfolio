@@ -22,11 +22,12 @@ const requiredEnvVars = [
 
 // Ghi nhận biến môi trường nào đang bị thiếu
 const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
 if (missingEnvVars.length > 0) {
   console.warn(`Missing environment variables: ${missingEnvVars.join(', ')}`);
 }
 
-// Export các biến môi trường để sử dụng trong ứng dụng
+// Định nghĩa các biến môi trường với giá trị mặc định khi cần
 export const env = {
   // Airtable
   AIRTABLE_API_KEY: process.env.NEXT_PUBLIC_AIRTABLE_API_KEY || '',
@@ -35,5 +36,16 @@ export const env = {
   
   // Contentful
   CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID || '',
-  CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN || ''
+  CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN || '',
+  
+  // GitHub Pages
+  REPOSITORY_NAME: process.env.REPOSITORY_NAME || '',
+  IS_GITHUB_PAGES: process.env.IS_GITHUB_PAGES === 'true',
 };
+
+// Một hàm tiện ích để tải biến môi trường, có thể sử dụng ở bất kỳ đâu trong ứng dụng
+export function loadEnv() {
+  return { ...env };
+}
+
+export default env;
