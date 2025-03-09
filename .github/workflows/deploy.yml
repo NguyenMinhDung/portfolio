@@ -36,6 +36,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
+      - name: Get repository name
+        id: repo-name
+        run: echo "REPOSITORY_NAME=$(echo $GITHUB_REPOSITORY | cut -d'/' -f2)" >> $GITHUB_OUTPUT
+      
       - name: Create env file
         run: |
           cat << EOF > .env.local
@@ -44,10 +48,41 @@ jobs:
           NEXT_PUBLIC_AIRTABLE_TABLE_NAME=${{ secrets.NEXT_PUBLIC_AIRTABLE_TABLE_NAME }}
           CONTENTFUL_SPACE_ID=${{ secrets.CONTENTFUL_SPACE_ID }}
           CONTENTFUL_ACCESS_TOKEN=${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
+          GITHUB_PAGES=true
+          REPOSITORY_NAME=${{ steps.repo-name.outputs.REPOSITORY_NAME }}
           EOF
       
       - name: Build with Next.js
         run: npm run build
+        env:
+          GITHUB_PAGES: 'true'
+          REPOSITORY_NAME: ${{ steps.repo-name.outputs.REPOSITORY_NAME }}
+      
+      - name: Fix 404 page for GitHub Pages
+        run: |
+          # Make sure 404.html exists at the root level for GitHub Pages
+          if [ -f "./out/404.html" ]; then
+            cp ./out/404.html ./out/
+          elif [ -f "./out/_next/server/pages/404.html" ]; then
+            cp ./out/_next/server/pages/404.html ./out/
+          elif [ -f "./out/404/index.html" ]; then
+            cp ./out/404/index.html ./out/404.html
+          else
+            # Create a simple 404 page if none exists
+            echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>404 - Page Not Found</title></head><body><h1>404 - Page Not Found</h1><p>The page you are looking for does not exist.</p><a href="/">Go Home</a></body></html>' > ./out/404.html
+          fi
+      
+      - name: Create .nojekyll file
+        run: touch ./out/.nojekyll
+      
+      - name: Fix paths for GitHub Pages
+        run: |
+          # Get the repository name
+          REPO_NAME="${{ steps.repo-name.outputs.REPOSITORY_NAME }}"
+          
+          # Adjust paths in HTML files
+          find ./out -name "*.html" -exec sed -i "s|href=\"/|href=\"/${REPO_NAME}/|g" {} \;
+          find ./out -name "*.html" -exec sed -i "s|src=\"/|src=\"/${REPO_NAME}/|g" {} \;
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
