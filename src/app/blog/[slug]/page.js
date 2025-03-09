@@ -5,7 +5,6 @@ import { notFound } from 'next/navigation';
 import { fetchBlogPostBySlug, fetchBlogPosts } from '@/lib/contentful-service';
 import { formatDate } from '@/lib/utils';
 import { renderRichText } from '@/lib/rich-text-renderer';
-import { Metadata } from 'next';
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
@@ -16,8 +15,8 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for the blog post
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = await fetchBlogPostBySlug(params.slug);
+export async function generateMetadata(props) {
+  const post = await fetchBlogPostBySlug(props.params.slug);
   
   if (!post) {
     return {
@@ -46,8 +45,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await fetchBlogPostBySlug(params.slug);
+// Main blog post page component
+export default async function BlogPostPage(props) {
+  const post = await fetchBlogPostBySlug(props.params.slug);
   
   // If post not found, return 404
   if (!post) {

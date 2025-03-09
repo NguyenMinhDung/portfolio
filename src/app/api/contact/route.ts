@@ -37,8 +37,6 @@ export async function POST(request: Request) {
     const base = initAirtable();
     const tableName = env.AIRTABLE_TABLE_NAME;
     
-    console.log('Saving to Airtable table:', tableName);
-    
     const result = await base(tableName).create([
       {
         fields: {

@@ -5,21 +5,6 @@ import Contact from '../components/sections/Contact'
 import Skills from '../components/sections/Skills'
 import RecentPosts from '../components/sections/RecentPosts'
 import { fetchHeroSection } from '@/lib/contentful-service'
-import { useLanguage } from '@/lib/LanguageContext'
-
-const textContent = {
-  'en-US': {
-    title: 'Hello! I am a AI Engineer',
-    subtitle: 'Optimize your work and life with AI',
-    description: 'I am a AI Engineer specializing in building intelligent automation solutions to help businesses and individuals optimize their work and life.'
-  },
-  'vi-VN': {
-    title: 'Xin chào! Tôi là một AI Engineer',
-    subtitle: 'Tiết kiệm thời gian, tận hưởng cuộc sống',
-    description: 'Tôi là một AI Engineer chuyên về phát triển các giải pháp tự động hóa thông minh giúp doanh nghiệp và cá nhân tối ưu hóa công việc.'
-  }
-}
-
 
 export default async function Home() {
   const heroData = await fetchHeroSection()

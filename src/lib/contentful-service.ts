@@ -1,4 +1,4 @@
-import { fetchEntries, fetchEntryById } from './contentful';
+import { fetchEntries } from './contentful';
 import { 
   HeroSection, 
   AboutSection, 
@@ -76,7 +76,6 @@ export const fetchProjects = async (locale = 'en-US'): Promise<Project[]> => {
       order: '-fields.order',
       locale
     });
-    console.log("Projects: ", projects);
     return projects;
   } catch (error) {
     console.error('Error fetching projects:', error);
@@ -128,7 +127,6 @@ export const fetchBlogPostBySlug = async (slug: string, locale = 'en-US'): Promi
       },
       locale
     });
-    console.log("Posts: ", posts);
     return posts[0] || null;
   } catch (error) {
     console.error(`Error fetching blog post with slug "${slug}":`, error);
@@ -144,7 +142,6 @@ export const fetchContactInfo = async (locale = 'en-US'): Promise<ContactInfo | 
       limit: 1,
       locale
     });
-    console.log("Contact Info: ", contactInfos);
     return contactInfos[0] || null;
   } catch (error) {
     console.error('Error fetching contact information:', error);

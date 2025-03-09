@@ -35,7 +35,6 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [siteConfig, setSiteConfig] = useState<SiteConfig | null>(null)
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const loadSiteConfig = async () => {
@@ -44,8 +43,6 @@ export default function Navigation() {
         setSiteConfig(data)
       } catch (error) {
         console.error('Error loading site configuration:', error)
-      } finally {
-        setLoading(false)
       }
     }
 
