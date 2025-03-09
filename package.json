@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "node -r ./src/env-config.js node_modules/.bin/next dev --turbopack",
-    "build": "SKIP_TYPE_CHECK=1 node -r ./src/env-config.js node_modules/.bin/next build",
-    "start": "node -r ./src/env-config.js node_modules/.bin/next start",
+    "build": "node -r ./src/env-config.js node_modules/.bin/next build",
+    "start": "npx serve@latest out",
     "lint": "next lint"
   },
   "dependencies": {
