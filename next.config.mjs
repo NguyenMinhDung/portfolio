@@ -14,7 +14,7 @@ const REPOSITORY_NAME = process.env.REPOSITORY_NAME || '';
 const isGithubPages = process.env.IS_GITHUB_PAGES === 'true';
 
 // Define base path for GitHub Pages
-const basePath = isGithubPages ? `/${REPOSITORY_NAME}` : '';
+const basePath = isGithubPages ? `/${REPOSITORY_NAME}/` : '';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
