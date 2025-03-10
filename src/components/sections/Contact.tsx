@@ -4,8 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FaGithub, FaTwitter, FaLinkedin, FaEnvelope } from 'react-icons/fa'
 import { fetchContactInfo } from '@/lib/contentful-service'
-// Không còn sử dụng trực tiếp service Airtable
-// import { saveContactToAirtable } from '@/lib/airtable-service'
+// Xóa import liên quan đến Airtable
 import { ContactInfo } from '@/types/contentful'
 import { getIcon } from '@/lib/icon-map'
 import { useLanguage } from '@/lib/LanguageContext'
@@ -41,6 +40,9 @@ const textContent = {
     connect: 'Kết nối với tôi'
   }
 }
+
+// Formspree endpoint - Sử dụng biến môi trường
+const FORMSPREE_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || 'https://formspree.io/f/YOUR_FORM_ID';
 
 export default function Contact() {
   const { locale } = useLanguage()
@@ -85,25 +87,26 @@ export default function Contact() {
     setSubmitResult(null)
 
     try {
-      // Gọi API route thay vì gọi trực tiếp service Airtable
-      const response = await fetch('/api/contact', {
+      // Sử dụng Formspree thay vì API route
+      const response = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(formData),
       });
       
       const result = await response.json();
       
-      if (response.ok && result.success) {
+      if (response.ok) {
         setSubmitResult({
           success: true,
           message: text.form.success,
         });
         setFormData({ name: '', email: '', message: '' });
       } else {
-        throw new Error(result.error || 'Failed to save to Airtable');
+        throw new Error(result.error || 'Failed to submit form');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
