@@ -14,7 +14,8 @@ const REPOSITORY_NAME = process.env.REPOSITORY_NAME || '';
 const isGithubPages = process.env.IS_GITHUB_PAGES === 'true';
 
 // Define base path for GitHub Pages
-const basePath = isGithubPages ? `/${REPOSITORY_NAME}/` : '';
+// Ensure the repository name is correctly set for GitHub Pages
+const basePath = isGithubPages ? `/${REPOSITORY_NAME}` : '';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -27,6 +28,9 @@ const nextConfig = {
   // Set basePath và assetPrefix cho GitHub Pages
   basePath: basePath,
   assetPrefix: isGithubPages ? `/${REPOSITORY_NAME}/` : '',
+
+  // Always use trailing slash for consistent behavior, especially for GitHub Pages
+  trailingSlash: true,
   
   images: {
     domains: ['localhost', 'images.ctfassets.net'],

@@ -35,6 +35,16 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [siteConfig, setSiteConfig] = useState<SiteConfig | null>(null)
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+  const isActivePath = (path: string): boolean => {
+    // Remove basePath from current pathname for correct comparison
+    const currentPath = pathname.replace(new RegExp(`^${basePath}`), '')
+    // Special case for homepage
+    if (path === '/' && (currentPath === '/' || currentPath === '')) {
+      return true
+    }
+    return currentPath === path || currentPath === path + '/'
+  }
 
   useEffect(() => {
     const loadSiteConfig = async () => {
@@ -86,7 +96,7 @@ export default function Navigation() {
                 key={index}
                 href={item.path}
                 className={`text-sm font-medium transition-colors duration-300 ${
-                  pathname === item.path
+                  isActivePath(item.path)
                     ? 'text-blue-400'
                     : 'text-gray-300 hover:text-white'
                 }`}
@@ -135,7 +145,7 @@ export default function Navigation() {
                   href={item.path}
                   onClick={() => setIsMenuOpen(false)}
                   className={`text-sm font-medium py-2 transition-colors duration-300 ${
-                    pathname === item.path
+                    isActivePath(item.path)
                       ? 'text-blue-400'
                       : 'text-gray-300 hover:text-white'
                   }`}
