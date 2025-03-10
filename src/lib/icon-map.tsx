@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   FaPython, FaReact, FaJs, FaDocker, FaAws, FaMicrosoft, FaGithub, 
-  FaDatabase, FaCode, FaNodeJs, FaExternalLinkAlt 
+  FaDatabase, FaCode, FaNodeJs, FaExternalLinkAlt, FaFacebook
 } from 'react-icons/fa';
 import { 
   SiTensorflow, SiPytorch, SiKubernetes, SiGooglecloud 
@@ -82,6 +82,8 @@ export function getIcon(iconName: string, size: IconSize = 'md'): React.ReactEle
     case 'external':
     case 'link':
       return <FaExternalLinkAlt className={`text-gray-600 ${sizeClass}`} />;
+    case 'facebook':
+      return <FaFacebook className={`text-gray-600 ${sizeClass}`} />;
       
     // Default
     default:
